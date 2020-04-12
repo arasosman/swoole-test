@@ -1,0 +1,61 @@
+version: "3"
+
+networks:
+  swoole:
+
+services:
+  php_laravel:
+    build: ./laravel
+    restart: always
+    ports:
+      - "80:80"
+    networks:
+      - swoole
+  php_licence:
+    build: ./licence
+    restart: always
+    ports:
+      - "83:80"
+    networks:
+      - swoole
+  php_organization:
+    build: ./organization
+    restart: always
+    ports:
+      - "84:80"
+    networks:
+      - swoole
+  php_security:
+    build: ./security
+    restart: always
+    ports:
+      - "85:80"
+    networks:
+      - swoole
+  mysql:
+    image: mysql:5.7.22
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "33061:3306"
+    volumes:
+    - ./data/mysql:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: swoole
+      MYSQL_USER: swoole
+      MYSQL_PASSWORD: swoole
+      MYSQL_ROOT_PASSWORD: swoole
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    networks:
+      - swoole
+  redis:
+    image: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./data/redis:/data
+    command: redis-server --appendonly yes
+    networks:
+      - swoole
