@@ -55,7 +55,7 @@ services:
       - "85:80"
     networks:
       - swoole
-  mysql:
+  mysql-swoole:
     image: mysql:5.7.22
     restart: unless-stopped
     tty: true

@@ -83,7 +83,7 @@ class AuthController extends Controller
     public function getOrganization($token, $type = 'enduser')
     {
         try {
-            $response = Http::withToken($token)->get('http://134.209.237.176:84/organization/organizations?type=' . $type);
+            $response = Http::withToken($token)->get('http://localhost:8000/organization/organizations?type=' . $type);
             $response = $response->body();
             $response = json_decode($response);
             $data = $response->data;
